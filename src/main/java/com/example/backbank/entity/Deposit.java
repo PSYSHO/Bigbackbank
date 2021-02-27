@@ -3,21 +3,33 @@ package com.example.backbank.entity;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @ToString
 @EqualsAndHashCode
 @Entity
-public class Product {
+public class Deposit {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private float wallet;
-    private String Type;
+    private float walletDepos;
+    @OneToOne
+    private Tarif tarif;
     private String Description;
     private long userId;
-    private String rate;
+    private boolean confirm;
+
+    public void setWalletDepos(float wallet) {
+        this.walletDepos = wallet;
+    }
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
 
     public long getId() {
         return id;
@@ -27,20 +39,15 @@ public class Product {
         this.id = id;
     }
 
-    public float getWallet() {
-        return wallet;
+    public float getWalletDepos() {
+        return walletDepos;
     }
 
-    public void setWallet(long wallet) {
-        this.wallet = wallet;
-    }
 
-    public String getType() {
-        return Type;
-    }
+    public Tarif getTarif() { return tarif; }
 
-    public void setType(String type) {
-        Type = type;
+    public void setTarif(Tarif tarif) {
+        this.tarif = tarif;
     }
 
     public String getDescription() {
@@ -59,11 +66,4 @@ public class Product {
         this.userId = userId;
     }
 
-    public String getRate() {
-        return rate;
-    }
-
-    public void setRate(String rate) {
-        this.rate = rate;
-    }
 }

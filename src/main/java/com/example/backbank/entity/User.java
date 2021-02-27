@@ -1,22 +1,72 @@
 package com.example.backbank.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.List;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity(name = "user_t")
+@Entity(name = "users")
 public class User {
 @Id
+@GeneratedValue(strategy = GenerationType.AUTO)
 private long id;
-private String firstname;
+private String username;
 private String SecondName;
 private String Lastname;
-@ManyToMany
-private List<Product> products;
-private String role;
-private String username;
+private float wallet;
+private String email;
+@OneToMany
+private Set<Deposit> deposits;
+@OneToMany
+private Set<CreditCards> creditCards;
+
+@ManyToMany(fetch = FetchType.LAZY)
+@JoinTable(	name = "user_roles",
+        joinColumns = @JoinColumn(name = "users_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+private Set<Role> roles = new HashSet<>();
+
 private String password;
+
+    public User() {
+    }
+
+    public User(String username,String email,String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+    public User(String username,String email,String password,float wallet) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(long id, String username, String secondName, String lastname, float wallet, Set<Deposit> deposits, String role, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.SecondName = secondName;
+        this.Lastname = lastname;
+        this.wallet = wallet;
+        this.deposits = deposits;
+        this.email = email;
+        this.password = password;
+    }
+
+    public float getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(float wallet) {
+        this.wallet = wallet;
+    }
+
+    public Set<CreditCards> getCreditProducts() {
+        return creditCards;
+    }
+
+    public void setCreditProducts(Set<CreditCards> creditCards) {
+        this.creditCards = creditCards;
+    }
 
     public long getId() {
         return id;
@@ -26,12 +76,12 @@ private String password;
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getEmail() {
+        return email;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setEmail(String firstname) {
+        this.email = firstname;
     }
 
     public String getSecondName() {
@@ -50,24 +100,41 @@ private String password;
         Lastname = lastname;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Set<Deposit> getProducts() {
+        return deposits;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProducts(Set<Deposit> deposits) {
+        this.deposits = deposits;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public String getUsername() {
         return username;
+    }
+
+    public Set<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(Set<Deposit> deposits) {
+        this.deposits = deposits;
+    }
+
+    public Set<CreditCards> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(Set<CreditCards> creditCards) {
+        this.creditCards = creditCards;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public void setUsername(String username) {

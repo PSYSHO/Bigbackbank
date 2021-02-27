@@ -13,10 +13,12 @@ public class Transaction {
     private long id;
     @OneToOne
     private User user;
+    private float summ;
     private String wallet;
-    private String Type;
+    private String type;
     private String discription;
     private boolean approved;
+    private float rate;
 
     public Transaction() {
     }
@@ -25,9 +27,17 @@ public class Transaction {
         this.id = id;
         this.user = user;
         this.wallet = wallet;
-        Type = type;
+        this.type = type;
         this.discription = discription;
         this.approved = approved;
+    }
+
+    public float getSumm() {
+        return summ;
+    }
+
+    public void setSumm(float summ) {
+        this.summ = summ;
     }
 
     public long getId() {
@@ -55,11 +65,11 @@ public class Transaction {
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
     public String getDiscription() {

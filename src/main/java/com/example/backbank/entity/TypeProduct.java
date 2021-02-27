@@ -1,4 +1,0 @@
-package com.example.backbank.entity;
-
-public enum TypeProduct {
-}
