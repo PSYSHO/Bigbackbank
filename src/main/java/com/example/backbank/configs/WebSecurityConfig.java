@@ -2,7 +2,7 @@ package com.example.backbank.configs;
 
 import com.example.backbank.security.jwt.AuthEntryPointJwt;
 import com.example.backbank.security.jwt.AuthTokenFilter;
-import com.example.backbank.security.services.UserDetailsServiceImpl;
+import com.example.backbank.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,9 +1,7 @@
 package com.example.backbank.controllers;
 
 import com.example.backbank.entity.Tarif;
-import com.example.backbank.enums.TypeProduct;
-import com.example.backbank.repositories.TarifRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.backbank.services.TarifService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,33 +10,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/bank/tarif")
 public class TarifController {
-    @Autowired
-    private TarifRepository tarifRepository;
+    private TarifService tarifService;
 
     @GetMapping("")
     public List<Tarif> getTarif(){
-        return tarifRepository.findAll();
+        return tarifService.getAll();
     }
     @GetMapping("{/{Id}")
     public Tarif getById(@PathVariable long Id){
-        return tarifRepository.findById(Id);
+        return tarifService.getByid(Id);
     }
     @PostMapping("/add")
     public void createTarif(@RequestBody Tarif tarif){
-        Tarif tarif1 = new Tarif();
-        tarif1.setRate(tarif.getRate());
-        tarif1.setType(tarif.getType());
-        tarifRepository.save(tarif1);
+       tarifService.createTarif(tarif);
     }
     @PutMapping
     public void updateTarif(@RequestBody Tarif tarif){
-        Tarif tarif1 = tarifRepository.findById(tarif.getId());
-        tarif1.setRate(tarif.getRate());
-        tarif1.setType(tarif.getType());
-        tarifRepository.save(tarif1);
+      tarifService.updateTarid(tarif);
     }
     @DeleteMapping("{/{Id}")
     public  void deleteTarif(@PathVariable("Id") long Id){
-        tarifRepository.deleteById(Id);
+        tarifService.delTarif(Id);
     }
 }

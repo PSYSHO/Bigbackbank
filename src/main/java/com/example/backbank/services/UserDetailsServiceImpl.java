@@ -1,4 +1,4 @@
-package com.example.backbank.security.services;
+package com.example.backbank.services;
 
 import com.example.backbank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

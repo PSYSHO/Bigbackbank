@@ -12,7 +12,7 @@ import com.example.backbank.payload.response.MessageResponse;
 import com.example.backbank.repositories.RoleRepository;
 import com.example.backbank.repositories.UserRepository;
 import com.example.backbank.security.jwt.JwtUtils;
-import com.example.backbank.security.services.UserDetailsImpl;
+import com.example.backbank.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

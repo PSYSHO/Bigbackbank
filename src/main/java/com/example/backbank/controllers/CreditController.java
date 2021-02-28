@@ -3,6 +3,7 @@ package com.example.backbank.controllers;
 import com.example.backbank.entity.CreditCards;
 import com.example.backbank.entity.User;
 import com.example.backbank.repositories.CreditRepository;
+import com.example.backbank.services.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -14,34 +15,30 @@ import java.util.List;
 @RestController()
 @RequestMapping("/bank/credit")
 public class CreditController {
-    public CreditController(CreditRepository creditRepository) {
-        this.creditRepository = creditRepository;
-    }
-
-    @Autowired
-    private CreditRepository creditRepository;
+    private CreditService creditService;
 
     @PostMapping()
-    public void createCredit(Principal user,@RequestBody CreditCards creditCards){
-        CreditCards creditCards1 = new CreditCards();
-        creditCards1.setConfirm(false);
-        creditCards1.setDuration(creditCards.getDuration());
-        creditCards1.setRate(creditCards.getRate());
-        creditCards1.setLimitCard(creditCards.getLimitCard());
-        creditCards1.setWallet(creditCards.getLimitCard());
-        creditRepository.save(creditCards);
+    public void createCredit(@AuthenticationPrincipal User user, @RequestBody CreditCards creditCards) {
+        creditService.creatCredit(user, creditCards);
     }
+
     @PutMapping()
-    public void updateCredit(@RequestBody CreditCards creditCards){
-        creditRepository.save(creditCards);
+    public void updateCredit(@RequestBody CreditCards creditCards) {
+        creditService.save(creditCards);
     }
+
     @GetMapping
-    public List<CreditCards> getAllCredit(@AuthenticationPrincipal User user){
-        return creditRepository.findAll();
+    public List<CreditCards> getAllCredit(@AuthenticationPrincipal User user) {
+        return creditService.getAll();
     }
+
     @GetMapping("/confirm")
-    public List<CreditCards> getConfirmCredit(@AuthenticationPrincipal User user){
-       return creditRepository.findByUserIdAndConfirm(user.getId(),true);
+    public List<CreditCards> getConfirmCredit(@AuthenticationPrincipal User user) {
+        return creditService.getConfirm(user);
+    }
+    @DeleteMapping
+    public void deleteCredit(){
+
     }
 
 }

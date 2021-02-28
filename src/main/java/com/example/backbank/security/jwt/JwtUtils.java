@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.example.backbank.security.services.UserDetailsImpl;
+import com.example.backbank.services.UserDetailsImpl;
 
 import io.jsonwebtoken.*;
 

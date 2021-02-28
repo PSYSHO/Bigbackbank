@@ -1,4 +1,4 @@
-package com.example.backbank.security.services;
+package com.example.backbank.services;
 
 import java.util.Collection;
 import java.util.List;
