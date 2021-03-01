@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface DepositRepository extends JpaRepository<Deposit,Long> {
     List<Deposit> findByUserIdAndConfirm(long id,boolean flag);
+    Deposit findById(long id);
 }

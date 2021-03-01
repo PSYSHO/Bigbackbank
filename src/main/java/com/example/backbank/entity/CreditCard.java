@@ -4,9 +4,9 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-public class CreditCards {
+public class CreditCard {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private float rate;
 
@@ -19,10 +19,10 @@ public class CreditCards {
     private boolean confirm;
     private float limitCard;
 
-    public CreditCards() {
+    public CreditCard() {
     }
 
-    public CreditCards(long id, float rate, float wallet, List<Payment> payments, int duration) {
+    public CreditCard(long id, float rate, float wallet, List<Payment> payments, int duration) {
         this.id = id;
         this.rate = rate;
         this.wallet = wallet;
@@ -30,7 +30,7 @@ public class CreditCards {
         this.duration = duration;
     }
 
-    public CreditCards(long id, float rate, float wallet, int duration) {
+    public CreditCard(long id, float rate, float wallet, int duration) {
         this.id = id;
         this.rate = rate;
         this.wallet = wallet * (rate * (duration / 12));

@@ -17,7 +17,7 @@ private String email;
 @OneToMany
 private Set<Deposit> deposits;
 @OneToMany
-private Set<CreditCards> creditCards;
+private Set<CreditCard> creditCards;
 
 @ManyToMany(fetch = FetchType.LAZY)
 @JoinTable(	name = "user_roles",
@@ -60,11 +60,11 @@ private String password;
         this.wallet = wallet;
     }
 
-    public Set<CreditCards> getCreditProducts() {
+    public Set<CreditCard> getCreditProducts() {
         return creditCards;
     }
 
-    public void setCreditProducts(Set<CreditCards> creditCards) {
+    public void setCreditProducts(Set<CreditCard> creditCards) {
         this.creditCards = creditCards;
     }
 
@@ -121,11 +121,11 @@ private String password;
         this.deposits = deposits;
     }
 
-    public Set<CreditCards> getCreditCards() {
+    public Set<CreditCard> getCreditCards() {
         return creditCards;
     }
 
-    public void setCreditCards(Set<CreditCards> creditCards) {
+    public void setCreditCards(Set<CreditCard> creditCards) {
         this.creditCards = creditCards;
     }
 

@@ -1,11 +1,13 @@
 package com.example.backbank.services;
 
+import com.example.backbank.dto.TarifDto;
 import com.example.backbank.entity.Tarif;
 import com.example.backbank.repositories.TarifRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class TarifService {
 
     @Autowired
@@ -19,17 +21,17 @@ public class TarifService {
       return   tarifRepository.findById(id);
     }
 
-    public void createTarif(Tarif tarif){
-        Tarif tarif1 = new Tarif();
-        tarif1.setRate(tarif.getRate());
-        tarif1.setType(tarif.getType());
-        tarifRepository.save(tarif1);
+    public void createTarif(TarifDto tarifDto){
+        Tarif tarif = new Tarif();
+        tarif.setRate(tarifDto.getRate());
+        tarif.setType(tarifDto.getType());
+        tarifRepository.save(tarif);
     }
-    public void updateTarid(Tarif tarif){
-        Tarif tarif1 = tarifRepository.findById(tarif.getId());
-        tarif1.setRate(tarif.getRate());
-        tarif1.setType(tarif.getType());
-        tarifRepository.save(tarif1);
+    public void updateTarid(long id,TarifDto tarifDto){
+        Tarif tarif = tarifRepository.findById(id);
+        tarif.setRate(tarifDto.getRate());
+        tarif.setType(tarifDto.getType());
+        tarifRepository.save(tarif);
     }
     public void delTarif(long id){
         tarifRepository.deleteById(id);

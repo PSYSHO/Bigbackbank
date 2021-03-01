@@ -14,7 +14,6 @@ import java.util.Set;
 
 @CrossOrigin
 @RestController()
-@PreAuthorize("hasRole('Admin')")
 @RequestMapping("/bank/admin")
 //@PreAuthorize("hasRole('Admin')")
 public class AdminController {

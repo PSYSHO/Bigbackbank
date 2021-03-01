@@ -17,19 +17,19 @@ public class Transaction {
     private String wallet;
     private String type;
     private String discription;
-    private boolean approved;
+    private boolean confirm;
     private float rate;
 
     public Transaction() {
     }
 
-    public Transaction(long id, User user, String wallet, String type, String discription, boolean approved) {
+    public Transaction(long id, User user, String wallet, String type, String discription, boolean confirm) {
         this.id = id;
         this.user = user;
         this.wallet = wallet;
         this.type = type;
         this.discription = discription;
-        this.approved = approved;
+        this.confirm = confirm;
     }
 
     public float getSumm() {
@@ -80,11 +80,11 @@ public class Transaction {
         this.discription = discription;
     }
 
-    public boolean isApproved() {
-        return approved;
+    public boolean isConfirm() {
+        return confirm;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
+    public void setConfirm(boolean approved) {
+        this.confirm = approved;
     }
 }
