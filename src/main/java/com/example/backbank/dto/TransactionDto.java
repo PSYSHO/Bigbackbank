@@ -5,7 +5,7 @@ import com.example.backbank.entity.User;
 public class TransactionDto {
     private float summ;
     private String wallet;
-    private String type;
+    private int type;
     private String discription;
     private boolean approved;
     private float rate;
@@ -26,11 +26,11 @@ public class TransactionDto {
         this.wallet = wallet;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

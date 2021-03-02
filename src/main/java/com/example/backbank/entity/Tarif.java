@@ -11,9 +11,9 @@ import javax.persistence.Id;
 public class Tarif {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String type;
-    float rate;
+    private Float rate;
 
     public long getId() {
         return id;

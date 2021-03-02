@@ -10,20 +10,19 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Transaction {
     @Id
-    private long id;
+    private Long id;
     @OneToOne
     private User user;
-    private float summ;
+    private Float summ;
     private String wallet;
-    private String type;
+    private Integer type;
     private String discription;
     private boolean confirm;
-    private float rate;
 
     public Transaction() {
     }
 
-    public Transaction(long id, User user, String wallet, String type, String discription, boolean confirm) {
+    public Transaction(long id, User user, String wallet, int type, String discription, boolean confirm) {
         this.id = id;
         this.user = user;
         this.wallet = wallet;
@@ -64,11 +63,11 @@ public class Transaction {
         this.wallet = wallet;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

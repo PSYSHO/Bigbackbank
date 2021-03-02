@@ -7,19 +7,20 @@ import java.util.*;
 public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private float rate;
+    private Long id;
+    private Float rate;
 
-    private float wallet;
-    private long userId;
+    private Float wallet;
+    private Long userId;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Payment> payments;
-    private int duration;
+    private Integer duration;
     private static final float PENI = 4000;
     private boolean confirm;
-    private float limitCard;
+    private Float limitCard;
 
     public CreditCard() {
+        Float t;
     }
 
     public CreditCard(long id, float rate, float wallet, List<Payment> payments, int duration) {

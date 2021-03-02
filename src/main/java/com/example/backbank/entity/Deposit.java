@@ -11,12 +11,12 @@ import javax.persistence.*;
 public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private float walletDepos;
+    private Long id;
+    private Float walletDepos;
     @OneToOne
     private Tarif tarif;
     private String Description;
-    private long userId;
+    private Long userId;
     private boolean confirm;
 
     public void setWalletDepos(float wallet) {
