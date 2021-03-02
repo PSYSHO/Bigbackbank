@@ -23,9 +23,14 @@ public class CreditController {
         creditService.creatCredit(user, creditDto);
     }
 
+    @PostMapping("/{Id}/{Summ}")
+    public void buy(@PathVariable Long Id,@PathVariable Float Summ) {
+        creditService.buy(Id,Summ);
+    }
+
     @PutMapping("/{Id}")
     public void updateCredit(@PathVariable long Id,@RequestBody CreditDto creditDto) {
-        creditService.save(Id,creditDto);
+        creditService.update(Id,creditDto);
     }
 
     @GetMapping

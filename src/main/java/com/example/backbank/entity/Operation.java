@@ -1,10 +1,15 @@
 package com.example.backbank.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@ToString
+@EqualsAndHashCode
 @Entity
 public class Operation {
     @Id

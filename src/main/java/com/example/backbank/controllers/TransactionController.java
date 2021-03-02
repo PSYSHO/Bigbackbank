@@ -34,5 +34,14 @@ public class TransactionController {
     public void create(@AuthenticationPrincipal User user,@RequestBody TransactionDto transactionDto){
         transactionService.createTransaction(user.getId(),transactionDto);
     }
+    @PostMapping("/depos")
+    public void createDeposTrans(@AuthenticationPrincipal User user,@RequestBody TransactionDto transactionDto){
+        transactionService.createTransaction(user.getId(),transactionDto);
+    }
+
+    @PostMapping("/depos")
+    public void createCreditTrans(@AuthenticationPrincipal User user,@RequestBody TransactionDto transactionDto){
+        transactionService.createTransaction(user.getId(),transactionDto);
+    }
 
 }

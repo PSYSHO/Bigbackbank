@@ -41,9 +41,13 @@ public class DeposService {
         deposit.setTarif(tarifRepository.getOne(deposDto.getTarif()));
         deposit.setDescription(deposDto.getDescription());
         deposit.setConfirm(false);
+        try{
         depositRepository.save(deposit);
         Operation operation = new Operation(true, false, deposit.getId(), 2, deposDto.getDescription());
         operationRepository.save(operation);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public List<Deposit> getAll() {
