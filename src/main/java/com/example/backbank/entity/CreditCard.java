@@ -18,6 +18,7 @@ public class CreditCard {
     private static final float PENI = 4000;
     private boolean confirm;
     private Float limitCard;
+    private Date  workingPeriod;
 
     public CreditCard() {
         Float t;
@@ -47,61 +48,37 @@ public class CreditCard {
         }
     }
 
-    public float getRate() {
-        return rate;
-    }
-
-    public void setRate(float rate) {
-        this.rate = rate;
-    }
-
-    public float getLimitCard() {
-        return limitCard;
-    }
-
-    public void setLimitCard(float limitCard) {
-        this.limitCard = limitCard;
-    }
-
-
-    public boolean isConfirm() {
-        return confirm;
-    }
-
-    public void setConfirm(boolean confirm) {
-        this.confirm = confirm;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public float calcSumm(float wallet, float rate, float duration) {
-        float summ = wallet * (rate * (duration / 12));
-        return summ;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Float getRate() {
+        return rate;
+    }
 
-    public float getWallet() {
+    public void setRate(Float rate) {
+        this.rate = rate;
+    }
+
+    public Float getWallet() {
         return wallet;
     }
 
-    public void setWallet(float wallet) {
+    public void setWallet(Float wallet) {
         this.wallet = wallet;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public List<Payment> getPayments() {
         return payments;
@@ -111,12 +88,45 @@ public class CreditCard {
         this.payments = payments;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public static float getPENI() {
+        return PENI;
+    }
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
+
+    public Float getLimitCard() {
+        return limitCard;
+    }
+
+    public void setLimitCard(Float limitCard) {
+        this.limitCard = limitCard;
+    }
+
+    public Date getWorkingPeriod() {
+        return workingPeriod;
+    }
+
+    public void setWorkingPeriod(Date workingPeriod) {
+        this.workingPeriod = workingPeriod;
+    }
+
+    public float calcSumm(float wallet, float rate, float duration) {
+        float summ = wallet * (rate * (duration / 12));
+        return summ;
     }
 
 }

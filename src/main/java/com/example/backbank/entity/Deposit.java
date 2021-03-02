@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @ToString
 @EqualsAndHashCode
@@ -18,6 +19,15 @@ public class Deposit {
     private String Description;
     private Long userId;
     private boolean confirm;
+    private Date workingPeriod;
+
+    public Deposit() {
+
+    }
+
+    public Deposit(Date workingPeriod) {
+        this.workingPeriod = workingPeriod;
+    }
 
     public void setWalletDepos(float wallet) {
         this.walletDepos = wallet;
@@ -43,6 +53,13 @@ public class Deposit {
         return walletDepos;
     }
 
+    public Date getWorkingPeriod() {
+        return workingPeriod;
+    }
+
+    public void setWorkingPeriod(Date workingPeriod) {
+        this.workingPeriod = workingPeriod;
+    }
 
     public Tarif getTarif() { return tarif; }
 
