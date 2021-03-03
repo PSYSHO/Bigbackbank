@@ -1,5 +1,6 @@
 package com.example.backbank.entity;
 
+import com.example.backbank.enums.TypeOperation;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -15,21 +16,20 @@ public class Transaction {
     private User user;
     private float summ;
     private String wallet;
-    private String type;
+    private TypeOperation type;
     private String discription;
-    private boolean approved;
-    private float rate;
+    private boolean confirm;
 
     public Transaction() {
     }
 
-    public Transaction(long id, User user, String wallet, String type, String discription, boolean approved) {
+    public Transaction(long id, User user, String wallet, TypeOperation type, String discription, boolean confirm) {
         this.id = id;
         this.user = user;
         this.wallet = wallet;
         this.type = type;
         this.discription = discription;
-        this.approved = approved;
+        this.confirm = confirm;
     }
 
     public float getSumm() {
@@ -64,11 +64,11 @@ public class Transaction {
         this.wallet = wallet;
     }
 
-    public String getType() {
+    public TypeOperation getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TypeOperation type) {
         this.type = type;
     }
 
@@ -80,11 +80,11 @@ public class Transaction {
         this.discription = discription;
     }
 
-    public boolean isApproved() {
-        return approved;
+    public boolean isConfirm() {
+        return confirm;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
     }
 }

@@ -1,7 +1,8 @@
 package com.example.backbank.controllers;
 
+import com.example.backbank.dto.TarifDto;
 import com.example.backbank.entity.Tarif;
-import com.example.backbank.services.TarifService;
+import com.example.backbank.services.TarifServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,26 +11,36 @@ import java.util.List;
 @RestController
 @RequestMapping("/bank/tarif")
 public class TarifController {
-    private TarifService tarifService;
+
+    public TarifController(TarifServiceImpl tarifServiceImpl) {
+        this.tarifServiceImpl = tarifServiceImpl;
+    }
+
+    private TarifServiceImpl tarifServiceImpl;
 
     @GetMapping("")
-    public List<Tarif> getTarif(){
-        return tarifService.getAll();
+    public List<Tarif> getTarif() {
+        return tarifServiceImpl.getAll();
     }
+
     @GetMapping("{/{Id}")
-    public Tarif getById(@PathVariable long Id){
-        return tarifService.getByid(Id);
+    public Tarif getById(@PathVariable long Id) {
+        return tarifServiceImpl.getByid(Id);
     }
+
     @PostMapping("/add")
-    public void createTarif(@RequestBody Tarif tarif){
-       tarifService.createTarif(tarif);
+    public void createTarif(@RequestBody TarifDto tarif) {
+        tarifServiceImpl.createTarif(tarif);
+
     }
-    @PutMapping
-    public void updateTarif(@RequestBody Tarif tarif){
-      tarifService.updateTarid(tarif);
+
+    @PutMapping("/{Id}")
+    public void updateTarif(@PathVariable long Id,@RequestBody TarifDto tarif) {
+        tarifServiceImpl.updateTarif(Id,tarif);
     }
-    @DeleteMapping("{/{Id}")
-    public  void deleteTarif(@PathVariable("Id") long Id){
-        tarifService.delTarif(Id);
+
+    @DeleteMapping("/{Id}")
+    public void deleteTarif(@PathVariable("Id") long Id) {
+        tarifServiceImpl.delTarif(Id);
     }
 }

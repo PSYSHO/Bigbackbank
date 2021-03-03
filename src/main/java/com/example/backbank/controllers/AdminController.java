@@ -2,6 +2,7 @@ package com.example.backbank.controllers;
 
 import com.example.backbank.entity.Role;
 import com.example.backbank.entity.User;
+import com.example.backbank.enums.RoleEnum;
 import com.example.backbank.repositories.RoleRepository;
 import com.example.backbank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,7 @@ import java.util.Set;
 
 @CrossOrigin
 @RestController()
-@PreAuthorize("hasRole('Admin')")
 @RequestMapping("/bank/admin")
-//@PreAuthorize("hasRole('Admin')")
 public class AdminController {
     public AdminController(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
@@ -33,9 +32,9 @@ public class AdminController {
         return userRepository.findAll();
     }
 
-    @PutMapping("/oper/")//todo Не успел изменить в конечной версии будер реворк
+    @PutMapping("/oper")//todo Не успел изменить в конечной версии будер реворк
     public void getRoleOPER(@RequestBody User user) {
-        Role role = roleRepository.findById(3);
+        Role role = roleRepository.findByName(RoleEnum.Operator).get();
         Set<Role> roleSet = new HashSet<>();
         boolean flag = true;
         for (Role role1 : user.getRoles()) {
@@ -60,7 +59,7 @@ public class AdminController {
 
     @PostMapping("/adm")
     public void getRoleADM(@RequestBody User user) {
-        Role role = roleRepository.findById(3);
+        Role role = roleRepository.findByName(RoleEnum.Admin).get();
         Set<Role> roleSet = new HashSet<>();
         boolean flag = true;
         for (Role role1 : user.getRoles()) {

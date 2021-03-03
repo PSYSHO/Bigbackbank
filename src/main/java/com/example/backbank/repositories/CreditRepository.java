@@ -1,13 +1,13 @@
 package com.example.backbank.repositories;
 
-import com.example.backbank.entity.CreditCards;
+import com.example.backbank.entity.CreditCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CreditRepository extends JpaRepository<CreditCards,Long> {
-    List<CreditCards> findByConfirm(boolean flag);
-    List<CreditCards> findByUserIdAndConfirm(long id,boolean flag);
+public interface CreditRepository extends JpaRepository<CreditCard,Long> {
+    List<CreditCard> findByConfirm(boolean flag);
+    List<CreditCard> findByUserIdAndConfirm(long id, boolean flag);
 }

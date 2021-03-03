@@ -1,6 +1,7 @@
 package com.example.backbank.entity;
 
-import com.example.backbank.enums.TypeProduct;
+
+import com.example.backbank.enums.TarifEnum;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +13,17 @@ public class Tarif {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String type;
+    private String name;
+    private TarifEnum type;
     float rate;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public long getId() {
         return id;
@@ -23,11 +33,11 @@ public class Tarif {
         this.id = id;
     }
 
-    public String getType() {
+    public TarifEnum getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TarifEnum type) {
         this.type = type;
     }
 

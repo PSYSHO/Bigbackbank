@@ -1,49 +1,46 @@
 package com.example.backbank.controllers;
 
+import com.example.backbank.dto.DeposDto;
 import com.example.backbank.entity.Deposit;
-import com.example.backbank.entity.Operation;
-import com.example.backbank.entity.User;
-import com.example.backbank.repositories.DepositRepository;
-import com.example.backbank.repositories.OperationRepository;
 import com.example.backbank.repositories.UserRepository;
-import com.example.backbank.services.DeposService;
+import com.example.backbank.services.DeposServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/bank/deposit")
 public class DepositController {
-
-    private DeposService deposService;
+    @Autowired
+    private DeposServiceImpl deposServiceImpl;
+    @Autowired
+    UserRepository userRepository;
 
     public DepositController() {
     }
 
-    @PutMapping()
-    public void updateDeposit(@RequestBody Deposit deposit) {
-        deposService.update(deposit);
+    @PutMapping("/{Id}")
+    public void updateDeposit(@PathVariable long Id, @RequestBody DeposDto deposDto) {
+        deposServiceImpl.update(Id, deposDto);
     }
 
     @GetMapping()
-    public List<Deposit> getConfirmDeposit(@AuthenticationPrincipal User user) {
-        return deposService.getConfirm(user);
+    public List<Deposit> getConfirmDeposit(Principal user) {
+        return deposServiceImpl.getConfirm(userRepository.findByUsername(user.getName()).get());
+
     }
 
     @PostMapping()
-    public void createDeposit(@AuthenticationPrincipal User user, @RequestBody Deposit deposit) {
-        deposService.createDepos(user, deposit);
+    public void createDeposit(Principal user, @RequestBody DeposDto deposDto) {
+        deposServiceImpl.createDepos(user, deposDto);
     }
 
-    @PreAuthorize("hasRole('Admin')")
+    //@PreAuthorize("hasRole('Admin')")
     @GetMapping("/all")
     public List<Deposit> getAllDeposit() {
-        return deposService.getAll();
+        return deposServiceImpl.getAll();
     }
 }

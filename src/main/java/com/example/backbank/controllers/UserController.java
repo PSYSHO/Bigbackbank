@@ -2,6 +2,7 @@ package com.example.backbank.controllers;
 
 import com.example.backbank.entity.Role;
 import com.example.backbank.entity.User;
+
 import javax.validation.Valid;
 
 import com.example.backbank.enums.RoleEnum;
@@ -40,19 +41,19 @@ public class UserController {
     }
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     @Autowired
-    JwtUtils jwtUtils;
+    private JwtUtils jwtUtils;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -78,10 +79,25 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if(roleRepository.findAll().size()<3){
+        if (roleRepository.findAll().size() < 3) {
             roleRepository.save(new Role(RoleEnum.User));
             roleRepository.save(new Role(RoleEnum.Admin));
             roleRepository.save(new Role(RoleEnum.Operator));
+        }
+        if (userRepository.findAll().size() == 0) {
+
+            User user = new User("admin", "admin@mail.ry", "111111", 9999900);
+            user.setPassword(encoder.encode(user.getPassword()));
+            Set<Role> roles = new HashSet<>();
+            Role userRole = roleRepository.findByName(RoleEnum.User).get();
+            Role admRole = roleRepository.findByName(RoleEnum.User).get();
+            Role operRole = roleRepository.findByName(RoleEnum.User).get();
+            roles.add(admRole);
+            roles.add(userRole);
+            roles.add(operRole);
+            user.setRoles(roles);
+            userRepository.save(user);
+
         }
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
