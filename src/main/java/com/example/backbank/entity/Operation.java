@@ -1,19 +1,24 @@
 package com.example.backbank.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@ToString
+@EqualsAndHashCode
 @Entity
 public class Operation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private boolean approvedClient;
     private boolean approvedOperator;
-    private long productid;
-    private int type;
+    private Long productid;
+    private Integer type;
     private String description;
 
     public Operation(boolean approvedClient, boolean approvedOperator, long productid, int type, String description) {

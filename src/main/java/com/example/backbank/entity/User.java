@@ -8,11 +8,11 @@ import java.util.Set;
 public class User {
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
-private long id;
+private Long id;
 private String username;
 private String SecondName;
 private String Lastname;
-private float wallet;
+private Float wallet;
 private String email;
 @OneToMany
 private Set<Deposit> deposits;

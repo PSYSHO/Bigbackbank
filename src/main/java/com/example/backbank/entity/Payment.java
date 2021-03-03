@@ -12,8 +12,8 @@ import java.util.Date;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private float summ;
+    private Long id;
+    private Float summ;
     private Date date;
 
     public Payment(float summ, Date date) {
