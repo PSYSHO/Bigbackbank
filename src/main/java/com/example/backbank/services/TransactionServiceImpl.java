@@ -18,25 +18,31 @@ import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-    @Autowired
+
     private TransactionRepository transactionRepository;
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
+
     private DepositRepository depositRepository;
-    @Autowired
+
     private CreditRepository creditRepository;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository, UserRepository userRepository) {
+    private CreditServiceImpl creditService;
+
+    @Autowired
+    public TransactionServiceImpl(TransactionRepository transactionRepository, UserRepository userRepository, DepositRepository depositRepository, CreditRepository creditRepository, CreditServiceImpl creditService) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
+        this.depositRepository = depositRepository;
+        this.creditRepository = creditRepository;
+        this.creditService = creditService;
     }
 
     public List<Transaction> getAll() {
         return transactionRepository.findAll();
     }
-    public List<Transaction> getAllByUser(Principal user)
-    {
+
+    public List<Transaction> getAllByUser(Principal user) {
         return transactionRepository.findByUser(userRepository.findByUsername(user.getName()).get().getId());
     }
 
@@ -50,11 +56,29 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setType(transactionDto.getType());
         transaction.setWallet(transaction.getWallet());
         transaction.setDiscription(transactionDto.getWallet());
-        transaction.setSumm(transaction.getSumm());
+        transaction.setSumm(transactionDto.getSumm());
         transaction.setUser(userRepository.findByUsername(user.getName()).get());
         User us = userRepository.findByUsername(user.getName()).get();
         us.setWallet(us.getWallet() - transactionDto.getSumm());
+        transaction.setWallet(transactionDto.getWallet());
         userRepository.save(us);
+        transaction.setConfirm(true);
+        transactionRepository.save(transaction);
+    }
+
+    public void refileWallet(Principal user, TransactionDto transactionDto) {
+        Transaction transaction = new Transaction();
+        transaction.setConfirm(false);
+        transaction.setType(transactionDto.getType());
+        transaction.setWallet(transaction.getWallet());
+        transaction.setDiscription(transactionDto.getWallet());
+        transaction.setSumm(transaction.getSumm());
+        transaction.setUser(userRepository.findByUsername(user.getName()).get());
+        User us = userRepository.findByUsername(user.getName()).get();
+        us.setWallet(us.getWallet() + transactionDto.getSumm());
+        userRepository.save(us);
+        transaction.setWallet(transactionDto.getWallet());
+        transaction.setConfirm(true);
         transactionRepository.save(transaction);
     }
 
@@ -66,19 +90,15 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setDiscription(transactionDto.getWallet());
         transaction.setSumm(transaction.getSumm());
         transaction.setUser(userRepository.findByUsername(user.getName()).get());
-        User us = userRepository.findByUsername(user.getName()).get();
-        us.setWallet(us.getWallet() - transactionDto.getSumm());
-        userRepository.save(us);
-        CreditCard creditCard = creditRepository.findById(id).get();
-        if (transactionDto.getType() == TypeOperation.Credit) creditCard.setWallet(creditCard.getWallet() - transactionDto.getSumm());
-        else if (transactionDto.getType() == TypeOperation.Deposit) creditCard.setWallet(creditCard.getWallet() + transaction.getSumm());
-        creditRepository.save(creditCard);//todo логика чутка изменится
+        creditService.buy(user.getName(), id, transactionDto.getSumm());
+        transaction.setConfirm(true);
         transactionRepository.save(transaction);
     }
 
     public void createTransactionDeposit(Principal user, TransactionDto transactionDto, Long id) {
         Transaction transaction = new Transaction();
-        transaction.setConfirm(false);
+        transaction.setConfirm(true);
+        transaction.setSumm(transactionDto.getSumm());
         transaction.setType(transactionDto.getType());
         transaction.setWallet(transaction.getWallet());
         transaction.setDiscription(transactionDto.getWallet());
@@ -87,15 +107,18 @@ public class TransactionServiceImpl implements TransactionService {
         User us = userRepository.findByUsername(user.getName()).get();
         us.setWallet(us.getWallet() - transactionDto.getSumm());
         userRepository.save(us);
+        transaction.setConfirm(true);
         Deposit deposit = depositRepository.findById(id).get();
-        if (transactionDto.getType() ==TypeOperation.Deposit) deposit.setWalletDepos(deposit.getWalletDepos() - transactionDto.getSumm());
-        else if (transactionDto.getType() == TypeOperation.Deposit) deposit.setWalletDepos(deposit.getWalletDepos() + transactionDto.getSumm());
+        if (transactionDto.getType() == TypeOperation.Deposit)
+            deposit.setWalletDepos(deposit.getWalletDepos() + transactionDto.getSumm());
+        depositRepository.save(deposit);
+        transaction.setWallet(transactionDto.getWallet());
         transactionRepository.save(transaction);
     }
 
     public void updateTransaction(long id, TransactionDto transactionDto) {
         Transaction transaction = new Transaction();
-        transaction.setConfirm(false);
+        transaction.setConfirm(true);
         transaction.setType(transactionDto.getType());
         transaction.setWallet(transaction.getWallet());
         transaction.setDiscription(transactionDto.getWallet());

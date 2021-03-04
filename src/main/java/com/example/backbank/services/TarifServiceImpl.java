@@ -4,9 +4,13 @@ import com.example.backbank.dto.TarifDto;
 import com.example.backbank.entity.Tarif;
 import com.example.backbank.enums.TarifEnum;
 import com.example.backbank.interfaces.TarifService;
+import com.example.backbank.payload.response.MessageResponse;
+import com.example.backbank.repositories.DepositRepository;
 import com.example.backbank.repositories.TarifRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 @Service
@@ -14,6 +18,8 @@ public class TarifServiceImpl implements TarifService {
 
     @Autowired
     private TarifRepository tarifRepository;
+    @Autowired
+    private DepositRepository depositRepository;
 
 
     public List<Tarif> getAll(){
@@ -38,6 +44,11 @@ public class TarifServiceImpl implements TarifService {
         tarifRepository.save(tarif);
     }
     public void delTarif(long id){
-        tarifRepository.deleteById(id);
+        try {
+            tarifRepository.deleteById(id);
+        }catch (Exception e){
+            e.getMessage();
+        }
+
     }
 }

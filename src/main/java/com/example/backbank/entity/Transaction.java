@@ -11,11 +11,14 @@ import javax.persistence.*;
 @EqualsAndHashCode
 public class Transaction {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @OneToOne
     private User user;
     private float summ;
     private String wallet;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private TypeOperation type;
     private String discription;
     private boolean confirm;

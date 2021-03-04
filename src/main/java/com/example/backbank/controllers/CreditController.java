@@ -23,10 +23,6 @@ public class CreditController {
         creditServiceImpl.creatCredit(user, creditDto);
     }
 
-    @PostMapping("/{Id}/{Summ}")
-    public void buy(@PathVariable Long Id,@PathVariable Float Summ) {
-        creditServiceImpl.buy(Id,Summ);
-    }
 
     @PutMapping("/{Id}")
     public void updateCredit(@PathVariable long Id,@RequestBody CreditDto creditDto) {
@@ -38,9 +34,15 @@ public class CreditController {
         return creditServiceImpl.getAll();
     }
 
+    @GetMapping("/all")
+    public List<CreditCard> getAllCredit(Principal user) {
+        return creditServiceImpl.getAll();
+    }
+
+
     @GetMapping("/confirm")
-    public List<CreditCard> getConfirmCredit(@AuthenticationPrincipal User user) {
-        return creditServiceImpl.getConfirm(user);
+    public List<CreditCard> getConfirmCredit(Principal user) {
+        return creditServiceImpl.getConfirm(user.getName());
     }
     @DeleteMapping
     public void deleteCredit(){

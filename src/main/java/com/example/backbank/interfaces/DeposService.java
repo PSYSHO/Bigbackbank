@@ -10,6 +10,6 @@ import java.util.List;
 public interface DeposService {
     void createDepos(Principal user, DeposDto deposDto);
     List<Deposit> getAll();
-    List<Deposit> getConfirm(User user);
+    List<Deposit> getConfirm(String user);
     void update(long id,DeposDto deposDto);
 }

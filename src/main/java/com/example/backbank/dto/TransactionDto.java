@@ -8,7 +8,6 @@ public class TransactionDto {
     private String wallet;
     private TypeOperation type;
     private String discription;
-    private boolean approved;
     private float rate;
 
     public float getSumm() {
@@ -43,13 +42,7 @@ public class TransactionDto {
         this.discription = discription;
     }
 
-    public boolean isApproved() {
-        return approved;
-    }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
 
     public float getRate() {
         return rate;

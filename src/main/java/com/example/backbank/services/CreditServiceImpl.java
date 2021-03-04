@@ -6,6 +6,7 @@ import com.example.backbank.entity.Operation;
 import com.example.backbank.entity.Payment;
 import com.example.backbank.entity.User;
 import com.example.backbank.enums.CurrencyEnum;
+import com.example.backbank.enums.TypeOperation;
 import com.example.backbank.interfaces.CreditService;
 import com.example.backbank.repositories.CreditRepository;
 import com.example.backbank.repositories.OperationRepository;
@@ -22,36 +23,54 @@ import java.util.List;
 
 @Service
 public class CreditServiceImpl implements CreditService {
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private OperationRepository operationRepository;
-    @Autowired
     private CreditRepository creditRepository;
-    @Autowired
     private PaymentRepository paymentRepository;
+
+    @Autowired
+    public CreditServiceImpl(UserRepository userRepository, OperationRepository operationRepository, CreditRepository creditRepository, PaymentRepository paymentRepository) {
+        this.userRepository = userRepository;
+        this.operationRepository = operationRepository;
+        this.creditRepository = creditRepository;
+        this.paymentRepository = paymentRepository;
+    }
 
     public List<CreditCard> getAll() {
         return creditRepository.findAll();
     }
 
+    public List<CreditCard> getAllByUser(String username) {
+        User user = userRepository.findByUsername(username).get();
+
+        return creditRepository.findByUserIdAndConfirm(user.getId(), true);
+    }
+
     public void creatCredit(Principal user, CreditDto creditDto) {
         User user1 = userRepository.findByUsername(user.getName()).get();
         CreditCard creditCard = createData(user1, creditDto);
-        Operation operation = new Operation(true, false, creditCard.getId(), 1, "");
+        Operation operation = new Operation(true, false, creditCard.getId(), TypeOperation.Credit, "Ожидает подтверждения");
         operationRepository.save(operation);
     }
 
-    public void buy(Long id, Float Summ) {
-        CreditCard creditCard = creditRepository.findById(id).get();
-        if (creditCard.getWallet() > Summ) {
-            float loan = Summ / creditCard.getDuration();
+    public void buy(String username, long id, float summ) {
+        User user = userRepository.findByUsername(username).get();
+        CreditCard creditCard = creditRepository.findById(id);
+        if (creditCard.getWallet() > summ) {
+            if (creditCard.getCurrencyEnum().equals(CurrencyEnum.Dollar)) {
+                user.setWallet(user.getWallet() + summ * 75);
+            } else if (creditCard.getCurrencyEnum().equals(CurrencyEnum.Euro)) {
+                user.setWallet(user.getWallet() + summ * 84);
+            } else user.setWallet(user.getWallet() + summ);
+            user.setWallet(user.getWallet() + summ);
+            float loan = summ / creditCard.getDuration();
             List<Payment> payments = new LinkedList<>();
-            for (int i = 0; i < creditCard.getDuration(); i++) payments.add(new Payment(loan, new Date()));
+            for (int i = 0; i < creditCard.getDuration(); i++) payments.add(new Payment(loan, LocalDate.now()));
             creditCard.setPayments(payments);
-            creditCard.setWallet(creditCard.getWallet() - Summ);
+            creditCard.setWallet(creditCard.getWallet() - summ);
+            userRepository.save(user);
             creditRepository.save(creditCard);
-        } else ;
+        }
 
     }
 
@@ -71,12 +90,18 @@ public class CreditServiceImpl implements CreditService {
         return creditCard;
     }
 
-    public List<CreditCard> getConfirm(User user) {
-        return creditRepository.findByUserIdAndConfirm(user.getId(), true);
+    public CreditCard getCredit(long id) {
+        CreditCard creditCard = creditRepository.findById(id);
+        return creditCard;
+    }
+
+    public List<CreditCard> getConfirm(String user) {
+        User user1 = userRepository.findByUsername(user).get();
+        return creditRepository.findByUserIdAndConfirm(user1.getId(), true);
     }
 
     public void update(long id, CreditDto creditDto) {
-        CreditCard creditCard = creditRepository.findById(id).get();
+        CreditCard creditCard = creditRepository.findById(id);
         creditCard.setConfirm(false);
         creditCard.setDuration(creditDto.getDuration());
         creditCard.setRate(creditDto.getRate());

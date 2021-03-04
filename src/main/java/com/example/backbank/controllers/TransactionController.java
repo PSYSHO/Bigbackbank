@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/bank/transaction")
 public class TransactionController {
@@ -38,6 +39,10 @@ public class TransactionController {
     @PostMapping()
     public void create(Principal user, @RequestBody TransactionDto transactionDto) {
         transactionServiceImpl.createTransaction(user, transactionDto);
+    }
+    @PostMapping("/refile")
+    public void refile(Principal user, @RequestBody TransactionDto transactionDto) {
+        transactionServiceImpl.refileWallet(user, transactionDto);
     }
 
     @PostMapping("/depos/{Id}")

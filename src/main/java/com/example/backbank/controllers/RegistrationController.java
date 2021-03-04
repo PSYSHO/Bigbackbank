@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,8 +32,8 @@ import java.util.stream.Collectors;
 @CrossOrigin
 @RestController
 @RequestMapping("/bank/auth")
-public class UserController {
-    public UserController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+public class RegistrationController {
+    public RegistrationController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -54,6 +55,8 @@ public class UserController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -79,26 +82,6 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (roleRepository.findAll().size() < 3) {
-            roleRepository.save(new Role(RoleEnum.User));
-            roleRepository.save(new Role(RoleEnum.Admin));
-            roleRepository.save(new Role(RoleEnum.Operator));
-        }
-        if (userRepository.findAll().size() == 0) {
-
-            User user = new User("admin", "admin@mail.ry", "111111", 9999900);
-            user.setPassword(encoder.encode(user.getPassword()));
-            Set<Role> roles = new HashSet<>();
-            Role userRole = roleRepository.findByName(RoleEnum.User).get();
-            Role admRole = roleRepository.findByName(RoleEnum.User).get();
-            Role operRole = roleRepository.findByName(RoleEnum.User).get();
-            roles.add(admRole);
-            roles.add(userRole);
-            roles.add(operRole);
-            user.setRoles(roles);
-            userRepository.save(user);
-
-        }
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()

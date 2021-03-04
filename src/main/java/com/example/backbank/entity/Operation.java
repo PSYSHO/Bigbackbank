@@ -1,12 +1,10 @@
 package com.example.backbank.entity;
 
+import com.example.backbank.enums.TypeOperation;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @ToString
 @EqualsAndHashCode
@@ -14,14 +12,16 @@ import javax.persistence.Id;
 public class Operation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     private boolean approvedClient;
     private boolean approvedOperator;
     private Long productid;
-    private Integer type;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private TypeOperation type;
     private String description;
 
-    public Operation(boolean approvedClient, boolean approvedOperator, long productid, int type, String description) {
+    public Operation(boolean approvedClient, boolean approvedOperator, long productid, TypeOperation type, String description) {
         this.approvedClient = approvedClient;
         this.approvedOperator = approvedOperator;
         this.productid = productid;
@@ -73,11 +73,11 @@ public class Operation {
         this.productid = productid;
     }
 
-    public int getType() {
+    public TypeOperation getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(TypeOperation type) {
         this.type = type;
     }
 }

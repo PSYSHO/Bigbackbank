@@ -10,4 +10,6 @@ import java.util.List;
 public interface CreditRepository extends JpaRepository<CreditCard,Long> {
     List<CreditCard> findByConfirm(boolean flag);
     List<CreditCard> findByUserIdAndConfirm(long id, boolean flag);
+    CreditCard findById(long id);
+
 }

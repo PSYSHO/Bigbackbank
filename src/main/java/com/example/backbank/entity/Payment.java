@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @ToString
@@ -11,12 +12,12 @@ import java.util.Date;
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Float summ;
-    private Date date;
+    private LocalDate date;
 
-    public Payment(float summ, Date date) {
+    public Payment(float summ,  LocalDate date) {
         this.summ = summ;
         this.date = date;
     }
@@ -41,11 +42,11 @@ public class Payment {
         this.summ = summ;
     }
 
-    public Date getDate() {
+    public  LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate( LocalDate date) {
         this.date = date;
     }
 }

@@ -3,6 +3,7 @@ package com.example.backbank.services;
 import com.example.backbank.entity.CreditCard;
 import com.example.backbank.entity.Deposit;
 import com.example.backbank.entity.Operation;
+import com.example.backbank.enums.TypeOperation;
 import com.example.backbank.interfaces.OperationService;
 import com.example.backbank.repositories.CreditRepository;
 import com.example.backbank.repositories.DepositRepository;
@@ -27,18 +28,30 @@ public class OperationServiceImpl implements OperationService {
         this.depositRepository = depositRepository;
     }
 
-    public void ConfirmCredit(Long id) {
-        Deposit deposit = depositRepository.findById(id).get();
+    public void confirmDepos(long id) {
+        Operation operation = operationRepository.findByProductid(id);
+        Deposit deposit = depositRepository.findById(operation.getProductid());
+        operation.setDescription("Операция подтверждена");
+        operation.setApprovedOperator(true);
         deposit.setConfirm(true);
         depositRepository.save(deposit);
     }
 
-    public void ConfirmDeposit(Long id) {
-        CreditCard creditCard = creditRepository.findById(id).get();
+    public void confirmCredit(long id) {
+        Operation operation = operationRepository.findById(id);
+        CreditCard creditCard = creditRepository.findById(operation.getProductid());
+        operation.setDescription("Операция подтверждена");
+        operation.setApprovedOperator(true);
         creditCard.setConfirm(true);
         creditRepository.save(creditCard);
     }
     public List<Operation> getAll(){
         return operationRepository.findAll();
+    }
+    public List<Operation> getAllDeposOperation(){
+        return operationRepository.findByType(TypeOperation.Deposit);
+    }
+    public List<Operation> getAllCreditOperation(){
+        return operationRepository.findByType(TypeOperation.Credit);
     }
 }

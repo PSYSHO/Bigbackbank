@@ -12,6 +12,8 @@ public class CreditCard {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private float rate;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private CurrencyEnum currencyEnum;
     private float wallet;
     private long userId;
@@ -22,6 +24,10 @@ public class CreditCard {
     private boolean confirm;
     private float limitCard;
     private LocalDate validPeriod;
+
+    public static float getPENI() {
+        return PENI;
+    }
 
     public CreditCard() {
     }
@@ -43,10 +49,9 @@ public class CreditCard {
         this.payments = new ArrayList<Payment>();
         Calendar c = new GregorianCalendar();
         c.setTime(new Date());
-        payments.add(new Payment((summ / duration), new Date()));
+        payments.add(new Payment((summ / duration), LocalDate.now()));
         for (int i = 1; i < duration; i++) {
-            c.set(Calendar.MONTH, +1);
-            payments.add(new Payment((summ / duration), c.getTime()));
+            payments.add(new Payment((summ / duration),LocalDate.now().plusMonths(i)));
         }
     }
 

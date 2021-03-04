@@ -29,7 +29,7 @@ public class DepositController {
 
     @GetMapping()
     public List<Deposit> getConfirmDeposit(Principal user) {
-        return deposServiceImpl.getConfirm(userRepository.findByUsername(user.getName()).get());
+        return deposServiceImpl.getConfirm(user.getName());
 
     }
 
@@ -40,7 +40,11 @@ public class DepositController {
 
     //@PreAuthorize("hasRole('Admin')")
     @GetMapping("/all")
-    public List<Deposit> getAllDeposit() {
-        return deposServiceImpl.getAll();
+    public List<Deposit> getAllDeposit(Principal user) {
+        return deposServiceImpl.getConfirm(user.getName());
+    }
+    @DeleteMapping("/{id}")
+    public void removeDeposit(Principal user,@PathVariable long id){
+        deposServiceImpl.removeDeposit(user.getName(),id);
     }
 }

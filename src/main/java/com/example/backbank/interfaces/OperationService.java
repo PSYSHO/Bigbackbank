@@ -5,7 +5,7 @@ import com.example.backbank.entity.Operation;
 import java.util.List;
 
 public interface OperationService {
-    void ConfirmCredit(Long id);
-    void ConfirmDeposit(Long id);
+    void confirmDepos(long id);
+    void confirmCredit(long id);
     List<Operation> getAll();
 }

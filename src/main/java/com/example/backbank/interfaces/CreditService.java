@@ -10,7 +10,7 @@ import java.util.List;
 public interface CreditService {
     void creatCredit(Principal user, CreditDto creditDto);
     List<CreditCard> getAll();
-    void buy(Long id, Float Summ);
-    List<CreditCard> getConfirm(User user);
+    void buy(String username,long id, float Summ);
+    List<CreditCard> getConfirm(String user);
     void update(long id, CreditDto creditDto);
 }
