@@ -59,7 +59,8 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setSumm(transactionDto.getSumm());
         transaction.setUser(userRepository.findByUsername(user.getName()).get());
         User us = userRepository.findByUsername(user.getName()).get();
-        us.setWallet(us.getWallet() - transactionDto.getSumm());
+        double com = 1.5;
+        us.setWallet((float) (us.getWallet() - transactionDto.getSumm()*com));
         transaction.setWallet(transactionDto.getWallet());
         userRepository.save(us);
         transaction.setConfirm(true);

@@ -49,9 +49,9 @@ public class OperationServiceImpl implements OperationService {
         return operationRepository.findAll();
     }
     public List<Operation> getAllDeposOperation(){
-        return operationRepository.findByType(TypeOperation.Deposit);
+        return operationRepository.findByTypeAndAndApprovedOperator(TypeOperation.Deposit,false);
     }
     public List<Operation> getAllCreditOperation(){
-        return operationRepository.findByType(TypeOperation.Credit);
+        return operationRepository.findByTypeAndAndApprovedOperator(TypeOperation.Credit,false);
     }
 }

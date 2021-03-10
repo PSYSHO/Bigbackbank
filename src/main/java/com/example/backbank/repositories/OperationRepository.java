@@ -12,4 +12,5 @@ public interface OperationRepository extends JpaRepository<Operation,Long> {
     Operation findByProductid(long id);
     Operation findById(long id);
     List<Operation> findByType(TypeOperation typeOperation);
+    List<Operation> findByTypeAndAndApprovedOperator(TypeOperation typeOperation,boolean flag);
 }

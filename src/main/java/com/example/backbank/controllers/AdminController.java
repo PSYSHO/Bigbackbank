@@ -36,49 +36,35 @@ public class AdminController {
     public void getRoleOPER(@RequestBody User user) {
         Role role = roleRepository.findByName(RoleEnum.Operator).get();
         Set<Role> roleSet = new HashSet<>();
-        boolean flag = true;
-        for (Role role1 : user.getRoles()) {
-            if (role1.getId() != 3) {
-                roleSet.add(role1);
-                flag = true;
-            } else {
-                flag = false;
-            }
-        }
-        if (!flag) {
+        if(user.getRoles().contains(role)){
+            roleSet = user.getRoles();
+            roleSet.remove(role);
             user.setRoles(roleSet);
             userRepository.save(user);
-            // System.out.println("Hello 1");
-        } else {
+        }else{
+            roleSet = user.getRoles();
             roleSet.add(role);
+
             user.setRoles(roleSet);
             userRepository.save(user);
-            //  System.out.println("Hello ");
         }
     }
 
-    @PostMapping("/adm")
+    @PutMapping("/adm")
     public void getRoleADM(@RequestBody User user) {
         Role role = roleRepository.findByName(RoleEnum.Admin).get();
         Set<Role> roleSet = new HashSet<>();
-        boolean flag = true;
-        for (Role role1 : user.getRoles()) {
-            if (role1.getId() != 2) {
-                roleSet.add(role1);
-                flag = true;
-            } else {
-                flag = false;
-            }
-        }
-        if (!flag) {
+        if(user.getRoles().contains(role)){
+            roleSet = user.getRoles();
+            roleSet.remove(role);
             user.setRoles(roleSet);
             userRepository.save(user);
-            // System.out.println("Hello 1");
-        } else {
+        }else{
+            roleSet = user.getRoles();
             roleSet.add(role);
+
             user.setRoles(roleSet);
             userRepository.save(user);
-            // System.out.println("Hello ");
         }
     }
 

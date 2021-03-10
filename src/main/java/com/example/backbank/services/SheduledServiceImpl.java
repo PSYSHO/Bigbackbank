@@ -91,14 +91,20 @@ public class SheduledServiceImpl implements SheduleService {
         }
         logger.info("Дань собрана");
     }//метод проверяющий просрочку оплаты кредита
+   // @Scheduled(cron = "*/10 * * * * *")
+    /*public void test(){
+        System.out.println("Helo");
+    }*/
     @Scheduled(cron = Cron)
     public void appDeposit() {
         List<Deposit> deposits = depositRepository.findAll();
         for (Deposit deposit : deposits) {
             if (deposit.getValidPeriod().getMonthValue() > LocalDate.now().getMonthValue()) {
                deposit.setWalletDepos(deposit.getWalletDepos()*deposit.getTarif().getRate());
+               depositRepository.save(deposit);
             }
         }
         logger.info("Подарки заслал");
     }//метод проверяющий просрочку оплаты кредита
+
 }
